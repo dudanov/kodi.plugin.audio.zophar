@@ -1,0 +1,17 @@
+[project]
+name = "kodi.plugin.audio.zophar"
+version = "0.1.0"
+requires-python = "==3.8.15"
+dependencies = [
+  "beautifulsoup4==4.12.2",
+  "requests==2.31.0",
+]
+
+[tool.uv]
+dev-dependencies = [
+  "isort",
+  "kodi-addon-checker",
+  "Kodistubs==21.0.0",
+  "Babel",
+  "ruff",
+]
