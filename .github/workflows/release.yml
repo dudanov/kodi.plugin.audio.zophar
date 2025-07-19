@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create_release:
+    runs-on: ubuntu-latest
+    name: Create Release
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: plugin.audio.zophar
+          sparse-checkout: |
+            resources
+            addon.xml
+            default.py
+            LICENSE.txt
+          sparse-checkout-cone-mode: false
+      - uses: mavrosxristoforos/get-xml-info@2.0
+        id: get_version
+        with:
+          xml-file: plugin.audio.zophar/addon.xml
+          xpath: /addon/@version
+      - name: Archive Release
+        uses: thedoctor0/zip-release@0.7.6
+        with:
+          type: zip
+          filename: plugin.audio.zophar.zip
+          exclusions: '*.git*'
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.get_version.outputs.info }}
+          files: plugin.audio.zophar.zip
