@@ -166,3 +166,4 @@ secrets.json
 
 # Working reverse-engineering data
 research/
+uv.lock
