@@ -12,24 +12,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          path: plugin.audio.zophar
-          sparse-checkout: |
-            resources
-            addon.xml
-            default.py
-            LICENSE.txt
-          sparse-checkout-cone-mode: false
+          path: plugin
+
+      - name: Package source code including submodules
+        uses: qmonnet/git-archive-all-action@v1
+        with:
+          base-repo: plugin
+          output-files: plugin.audio.zophar.zip
+          prefix: plugin.audio.zophar/
+
       - uses: mavrosxristoforos/get-xml-info@2.0
         id: get_version
         with:
-          xml-file: plugin.audio.zophar/addon.xml
+          xml-file: plugin/addon.xml
           xpath: /addon/@version
-      - name: Archive Release
-        uses: thedoctor0/zip-release@0.7.6
-        with:
-          type: zip
-          filename: plugin.audio.zophar.zip
-          exclusions: '*.git*'
+
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
